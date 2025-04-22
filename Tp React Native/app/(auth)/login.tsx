@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import {router} from 'expo-router'
-import { View, StyleSheet, Alert } from "react-native";
-import { TextInput, IconButton,Button as Bt } from "react-native-paper";
+import { View, StyleSheet, Alert, Text, Image, Dimensions } from "react-native";
+import { TextInput, IconButton, Button as Bt } from "react-native-paper";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/config/firebase";
-import { Link, useRouter } from "expo-router";
-import Button from "@/components/ui/Button";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secureText, setSecureText] = useState(true);
   const [loading, setLoading] = useState(false);
-
 
   const goToRegister = () => {
     router.push("/(auth)/register");
@@ -39,67 +37,175 @@ const LoginScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Button label=" il est quoi" onPress={goTodashboard}/>
-      <Button label="Register que les petits"theme="primary" onPress={goToRegister}/>
-      <TextInput
-        label="Adresse e-mail"
-        value={email}
-        onChangeText={setEmail}
-        mode="outlined"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        style={styles.input}
-      />
-
-      <View style={styles.passwordContainer}>
-        <TextInput
-          label="Mot de passe"
-          value={password}
-          onChangeText={setPassword}
-          mode="outlined"
-          secureTextEntry={secureText}
-          autoCapitalize="none"
-          style={styles.passwordInput}
-        />
-        <IconButton
-          icon={secureText ? "eye-off" : "eye"}
-          onPress={() => setSecureText(!secureText)}
-        />
+    <LinearGradient
+      colors={['#1a1a1a', '#2d2d2d']}
+      style={styles.container}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>Connect.</Text>
+        <Text style={styles.subtitle}>Bienvenue dans le futur</Text>
       </View>
 
-      <Bt
-        mode="contained"
-        onPress={handleLogin}
-        loading={loading}
-        disabled={loading}
-        style={styles.button}
-      >
-        Se connecter
-      </Bt>
-    </View>
+      <View style={styles.formContainer}>
+        <View style={styles.card}>
+          <TextInput
+            label="Adresse e-mail"
+            value={email}
+            onChangeText={setEmail}
+            mode="outlined"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            style={styles.input}
+            theme={{ colors: { primary: '#00ffa3', background: '#2d2d2d' }}}
+            left={<TextInput.Icon icon="email" color="#00ffa3" />}
+            outlineColor="#444"
+            textColor="#fff"
+          />
+
+          <View style={styles.passwordContainer}>
+            <TextInput
+              label="Mot de passe"
+              value={password}
+              onChangeText={setPassword}
+              mode="outlined"
+              secureTextEntry={secureText}
+              autoCapitalize="none"
+              style={styles.passwordInput}
+              theme={{ colors: { primary: '#00ffa3', background: '#2d2d2d' }}}
+              left={<TextInput.Icon icon="lock" color="#00ffa3" />}
+              outlineColor="#444"
+              textColor="#fff"
+            />
+            <IconButton
+              icon={secureText ? "eye-off" : "eye"}
+              onPress={() => setSecureText(!secureText)}
+              style={styles.eyeIcon}
+              iconColor="#00ffa3"
+            />
+          </View>
+
+          <Bt
+            mode="contained"
+            onPress={handleLogin}
+            loading={loading}
+            disabled={loading}
+            style={styles.loginButton}
+            contentStyle={styles.buttonContent}
+            labelStyle={styles.buttonText}
+          >
+            Se connecter
+          </Bt>
+
+          <View style={styles.registerContainer}>
+            <Text style={styles.registerText}>Nouveau ?</Text>
+            <Bt
+              mode="text"
+              onPress={goToRegister}
+              style={styles.registerButton}
+              labelStyle={styles.registerButtonText}
+            >
+              Créer un compte
+            </Bt>
+          </View>
+        </View>
+      </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    padding: 20,
-    backgroundColor: "#f4f4f4",
+    width: '100%',
+  },
+  headerContainer: {
+    paddingTop: 80,
+    paddingBottom: 40,
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 48,
+    fontWeight: '800',
+    color: '#00ffa3',
+    marginBottom: 8,
+    letterSpacing: 1,
+  },
+  subtitle: {
+    fontSize: 20,
+    color: '#ffffff',
+    opacity: 0.7,
+  },
+  formContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  card: {
+    backgroundColor: 'rgba(45, 45, 45, 0.95)',
+    borderRadius: 15,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    shadowColor: '#00ffa3',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20,
+    elevation: 5,
   },
   input: {
-    marginBottom: 10,
+    marginBottom: 16,
+    backgroundColor: '#2d2d2d',
+    fontSize: 16,
+    borderRadius: 8,
   },
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: 24,
   },
   passwordInput: {
     flex: 1,
+    backgroundColor: '#2d2d2d',
+    fontSize: 16,
+    borderRadius: 8,
   },
-  button: {
-    marginTop: 20,
+  eyeIcon: {
+    position: 'absolute',
+    right: 0,
+  },
+  loginButton: {
+    marginTop: 16,
+    borderRadius: 8,
+    backgroundColor: '#00ffa3',
+    elevation: 0,
+  },
+  buttonContent: {
+    height: 52,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+    color: '#1a1a1a',
+  },
+  registerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 24,
+  },
+  registerText: {
+    fontSize: 15,
+    color: '#ffffff',
+    opacity: 0.7,
+  },
+  registerButton: {
+    marginLeft: 4,
+  },
+  registerButtonText: {
+    color: '#00ffa3',
+    fontWeight: 'bold',
   },
 });
 
