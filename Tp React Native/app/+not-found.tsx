@@ -7,7 +7,7 @@ export default function NotFound() {
          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen options={{ title: 'Not Found' }} />
             <View style={styles.container}>
-                <Link href="/" style={styles.button}>Go to Home</Link>
+                <Link href="/login" style={styles.button}>Go to Home</Link>
             </View>
         </>
     )

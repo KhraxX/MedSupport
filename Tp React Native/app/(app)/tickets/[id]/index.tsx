@@ -40,6 +40,7 @@ const TicketDetails = () => {
   }, [idTicket]);
 
   useEffect(() => {
+    //récupération du nom de l'utiliastuer
     const fetchCreator = async () => {
       if (ticket?.createdBy) {
         try {
@@ -263,12 +264,6 @@ const TicketDetails = () => {
               </View>
             )}
 
-            {ticket.location && (
-              <View style={styles.metaRow}>
-                <Text style={styles.metaLabel}>Lieu</Text>
-                <Text style={styles.metaValue}>{ticket.location}</Text>
-              </View>
-            )}
           </View>
         </View>
 

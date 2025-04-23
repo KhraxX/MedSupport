@@ -1,7 +1,10 @@
-import { db } from "@/config/firebase";
-import { User } from "@/types/user";
-import { dateOnly } from "@/utils/dateFormatter";
-import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from "firebase/firestore";
+import app from "../config/firebaseConfig";
+import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
+
+import { db } from "../config/firebaseConfig"; // Initialize Firestore
+
+// Initialize Firestore
+import { User } from "../types/user";
 
 const getUserData = async (uid: string) => {
   const userRef = doc(db, "Users", uid);
@@ -62,11 +65,4 @@ const listenToSupportUsers = (
         }
     };
 
-const updateUser = async (userId: string): Promise<void> => {
-  if (!userId) throw new Error("ID d'utilisateur manquant.");
-
-  const userRef = doc(db, "Users", userId);
-
-  await updateDoc(userRef, { role: "support" });
-}
-export { getUserData, listenToSupportUsers, updateUser, getAllUsers };
+export { getUserData, listenToSupportUsers, getAllUsers };

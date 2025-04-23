@@ -1,9 +1,10 @@
-import { notifyLocalAssignation, notifyLocalEdit, notifyLocalTicket } from "@/components/notification/localNotification";
-import { db } from "@/config/firebase";
-import { TicketFirst, TicketTrue } from "@/types/ticket";
-import { dateOnly } from "@/utils/dateFormatter";
-import { collection, getDocs, addDoc, updateDoc, doc,getDoc, deleteDoc, Timestamp, onSnapshot, DocumentReference } from "firebase/firestore";
+import { notifyLocalAssignation, notifyLocalEdit, notifyLocalTicket } from "../components/notification/localNotification";
+import app from "../config/firebaseConfig";
+import { TicketFirst, TicketTrue } from "../types/ticket";
+import { dateOnly } from "../utils/dateFormatter";
+import { collection, getDocs, addDoc, updateDoc, doc, getDoc, deleteDoc, Timestamp } from "firebase/firestore";
 
+import { db } from "../config/firebaseConfig";
 
 const getAllTickets = async (): Promise<TicketTrue[]> => {
   const ticketsCollection = collection(db, "Tickets");
@@ -53,9 +54,7 @@ const createTicket = async (ticket: TicketFirst): Promise<TicketTrue | null> => 
     createdAt: Timestamp.fromDate(dateOnly),
     updatedAt: Timestamp.fromDate(dateOnly),
   };
-  if (ticket.location) {
-    ticketData.location = ticket.location;
-  }
+
   if (ticket.dueDate) {
     ticketData.dueDate = ticket.dueDate;
   }

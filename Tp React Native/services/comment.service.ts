@@ -1,5 +1,7 @@
 import { notifyLocalComment } from "@/components/notification/localNotification";
-import { db } from "@/config/firebase";
+import app from "@/config/firebaseConfig";
+import { db } from "@/config/firebaseConfig";
+
 import { comment } from "@/types/comment";
 import { TicketFirst } from "@/types/ticket";
 import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, query, Timestamp, where } from "firebase/firestore";

@@ -371,11 +371,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
   },
-  locationText: {
-    marginTop: 8,
-    color: "#424242",
-    fontSize: 14,
-  },
+  
 });
 
 export default AddTicketForm;
